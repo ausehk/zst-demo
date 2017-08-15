@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlst.spring.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zlst.spring.entity.UserVo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+
+
+  <select id="queryUserInfoById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+          id,user_name,password
+        FROM sys_user
+        WHERE id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryUserList" parameterType="com.zlst.spring.query.UserQuery"
+            resultMap="BaseResultMap">
+        SELECT
+          id,user_name,password
+        FROM sys_user
+        <where>
+            <if test="null != userName and '' != userName">user_name = #{userName}</if>
+        </where>
+    </select>
+</mapper>
